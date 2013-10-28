@@ -1,0 +1,31 @@
+{
+  "name":"webforge/project",
+  "description":"Project centric framework and component glue",
+  "require":{
+    "webforge/webforge":"1.6.*@dev",
+    "webforge/doctrine":"1.0.*@dev",
+    "webforge/view":"1.0.*@dev",
+    "webforge/config":"1.0.*@stable"
+  },
+  "license":"MIT",
+  "authors":[
+    {
+      "name":"Philipp Scheit",
+      "email":"p.scheit@ps-webforge.com"
+    }
+  ],
+  "minimum-stability":"dev",
+  "autoload":{
+    "psr-0":{
+      "Webforge\\Framework\\Project":["lib/", "tests/"]
+    }
+  },
+  "extra":{
+    "branch-alias":{
+      "dev-master":"1.0.x-dev"
+    }
+  },
+  "require-dev": {
+    "webforge/testplate": "1.*"
+  }
+}
