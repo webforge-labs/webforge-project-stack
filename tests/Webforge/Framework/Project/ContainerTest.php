@@ -10,7 +10,8 @@ class ContainerTest extends \Webforge\Code\Test\Base {
     $this->chainClass = __NAMESPACE__ . '\\Container';
     parent::setUp();
 
-    $this->project = $this->frameworkHelper->getBootContainer()->getProject();
+    $this->project = clone $this->frameworkHelper->getBootContainer()->getProject();
+    $this->notConfiguredProject = clone $this->project;
 
     $cfg = $this->project->getConfiguration();
     $cfg->set(
@@ -43,5 +44,11 @@ class ContainerTest extends \Webforge\Code\Test\Base {
   public function testReturnsTheDoctrineContainerWithConfigurationFromProject() {
     $this->assertInstanceOf('Webforge\Doctrine\Container', $dcc = $this->projectContainer->getDoctrineContainer());
     $this->assertInstanceOf('Doctrine\ORM\EntityManager', $dcc->getEntityManager('default'));
+  }
+
+  public function testWihoutPathsContainerCannotInitDoctrine() {
+    $this->setExpectedException('InvalidArgumentException');
+    $this->projectContainer = new Container($this->notConfiguredProject);
+    $this->projectContainer->getDoctrineContainer()->getEntityManager();
   }
 }

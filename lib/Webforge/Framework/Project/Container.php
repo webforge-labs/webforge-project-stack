@@ -60,13 +60,4 @@ class Container {
   public function getProject() {
     return $this->project;
   }
-  
-  /**
-   * @param Webforge\Framework\Project $project
-   * @chainable
-   */
-  public function injectProject(Project $project) {
-    $this->project = $project;
-    return $this;
-  }
 }
