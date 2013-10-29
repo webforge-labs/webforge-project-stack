@@ -1,12 +1,6 @@
 {
   "name":"webforge/project",
   "description":"Project centric framework and component glue",
-  "require":{
-    "webforge/webforge":"1.6.*@dev",
-    "webforge/doctrine":"1.0.*@dev",
-    "webforge/view":"1.0.*@dev",
-    "webforge/config":"1.0.*@stable"
-  },
   "license":"MIT",
   "authors":[
     {
@@ -17,15 +11,23 @@
   "minimum-stability":"dev",
   "autoload":{
     "psr-0":{
-      "Webforge\\Framework\\Project":["lib/", "tests/"]
+      "Webforge\\Framework\\Project":["lib/", "tests/"],
+      "Webforge": "D:\\www\\webforge\\lib",
+      "Webforge\\Doctrine": "D:\\www\\webforge-doctrine\\lib"
     }
+  },
+  "require":{
+    "webforge/webforge":"1.6.*@dev",
+    "webforge/doctrine":"1.2.*@dev",
+    "webforge/view":"1.0.*@dev",
+    "webforge/config":"1.0.*@stable"
+  },
+  "require-dev": {
+    "webforge/testplate": "1.*"
   },
   "extra":{
     "branch-alias":{
       "dev-master":"1.0.x-dev"
     }
-  },
-  "require-dev": {
-    "webforge/testplate": "1.*"
   }
 }
