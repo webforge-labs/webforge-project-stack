@@ -1,6 +1,6 @@
 <?php
 
-namespace Webforge\Framework\Project;
+namespace Webforge\ProjectStack;
 
 use Webforge\Framework\Project;
 use Webforge\Doctrine\Container as DoctrineContainer;

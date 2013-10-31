@@ -1,6 +1,6 @@
 <?php
 
-namespace Webforge\Framework\Project;
+namespace Webforge\ProjectStack;
 
 class ContainerTest extends \Webforge\Code\Test\Base {
 
@@ -62,7 +62,7 @@ class ContainerTest extends \Webforge\Code\Test\Base {
     $dcc->getEntityManager();
 
     $this->assertEquals(
-      (string) $this->notConfiguredProject->dir('lib')->sub('Webforge/Framework/Project/Entities/'),
+      (string) $this->notConfiguredProject->dir('lib')->sub('Webforge/ProjectStack/Entities/'),
       (string) $this->notConfiguredProject->dir('doctrine-entities')
     );
 
