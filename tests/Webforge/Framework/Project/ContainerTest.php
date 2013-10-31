@@ -44,11 +44,29 @@ class ContainerTest extends \Webforge\Code\Test\Base {
   public function testReturnsTheDoctrineContainerWithConfigurationFromProject() {
     $this->assertInstanceOf('Webforge\Doctrine\Container', $dcc = $this->projectContainer->getDoctrineContainer());
     $this->assertInstanceOf('Doctrine\ORM\EntityManager', $dcc->getEntityManager('default'));
+
+    $this->assertEquals(
+      (string) $this->project->getRootDirectory()->sub('tests/files/Entities/'),
+      $this->project->dir('doctrine-entities')
+    );
+
+    $this->assertEquals(
+      (string) $this->project->getRootDirectory()->sub('files/cache/doctrine/proxies/'),
+      (string) $this->project->dir('doctrine-proxies')
+    );
   }
 
-  public function testWihoutPathsContainerCannotInitDoctrine() {
-    $this->setExpectedException('InvalidArgumentException');
+  public function testWithoutPaths_InitDoctrineSetsTheEntitiesPathToTheMainNamespaceEntitiesSub() {
     $this->projectContainer = new Container($this->notConfiguredProject);
-    $this->projectContainer->getDoctrineContainer()->getEntityManager();
+    $dcc = $this->projectContainer->getDoctrineContainer();
+    $dcc->getEntityManager();
+
+    $this->assertEquals(
+      (string) $this->notConfiguredProject->dir('lib')->sub('Webforge/Framework/Project/Entities/'),
+      (string) $this->notConfiguredProject->dir('doctrine-entities')
+    );
+
+    $this->assertInstanceOf('Webforge\Common\System\Dir', $proxies = $this->notConfiguredProject->dir('doctrine-proxies'));
+    $this->assertEquals($proxies, $dcc->getProxyDirectory());
   }
 }

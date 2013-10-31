@@ -4,6 +4,7 @@ namespace Webforge\Framework\Project;
 
 use Webforge\Framework\Project;
 use Webforge\Doctrine\Container as DoctrineContainer;
+use InvalidArgumentException;
 
 class Container {
 
@@ -39,6 +40,20 @@ class Container {
   }
 
   protected function initDoctrineContainer(DoctrineContainer $dcc) {
+    try {
+      $this->project->dir('doctrine-entities');
+    } catch (InvalidArgumentException $e) {
+      $this->project->defineDirectory(
+        'doctrine-entities', 
+        $this->project->getNamespaceDirectory()
+          ->sub('Entities')
+          ->makeRelativeTo($this->project->getRootDirectory())
+      ); 
+    }
+
+    // proxies should be defined anyway (as default)
+    $dcc->setProxyDirectory($this->project->dir('doctrine-proxies'));
+
     $dcc->initDoctrine(
       $this->project->getConfiguration()->req('db'),
       array($this->project->dir('doctrine-entities'))
