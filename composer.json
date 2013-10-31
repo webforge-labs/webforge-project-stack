@@ -1,6 +1,6 @@
 {
-  "name":"webforge/project",
-  "description":"Project centric framework and component glue",
+  "name":"webforge/project-stack",
+  "description":"Full stack for webforge components to write a webapplication or website.",
   "license":"MIT",
   "authors":[
     {
@@ -11,9 +11,7 @@
   "minimum-stability":"dev",
   "autoload":{
     "psr-0":{
-      "Webforge\\Framework\\Project":["lib/", "tests/"],
-      "Webforge": "D:\\www\\webforge\\lib",
-      "Webforge\\Doctrine": "D:\\www\\webforge-doctrine\\lib"
+      "Webforge\\ProjectStack":["lib/", "tests/"]
     }
   },
   "require":{
