@@ -69,4 +69,8 @@ class ContainerTest extends \Webforge\Code\Test\Base {
     $this->assertInstanceOf('Webforge\Common\System\Dir', $proxies = $this->notConfiguredProject->dir('doctrine-proxies'));
     $this->assertEquals($proxies, $dcc->getProxyDirectory());
   }
+
+  public function testReturnsAKernel() {
+    $this->assertInstanceOf('Symfony\Component\HttpKernel\KernelInterface', $this->projectContainer->getKernel());
+  }
 }

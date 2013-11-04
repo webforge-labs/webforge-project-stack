@@ -1,31 +1,39 @@
 {
-  "name":"webforge/project-stack",
-  "description":"Full stack for webforge components to write a webapplication or website.",
-  "license":"MIT",
-  "authors":[
-    {
-      "name":"Philipp Scheit",
-      "email":"p.scheit@ps-webforge.com"
-    }
-  ],
-  "minimum-stability":"dev",
-  "autoload":{
-    "psr-0":{
-      "Webforge\\ProjectStack":["lib/", "tests/"]
+  "name": "webforge/project-stack",
+  "description": "Full stack for webforge components to write a webapplication or website.",
+  "license": "MIT",
+  "authors": [{
+    "name": "Philipp Scheit",
+    "email": "p.scheit@ps-webforge.com"
+  }],
+  "minimum-stability": "dev",
+  "autoload": {
+    "psr-0": {
+      "Webforge\\ProjectStack": ["lib/", "tests/"],
+      "Webforge\\Code\\Test": "D:\\www\\webforge-testplate\\lib"
     }
   },
-  "require":{
-    "webforge/webforge":"1.7.*@dev",
-    "webforge/doctrine":"1.2.*@dev",
-    "webforge/view":"1.0.*@dev",
-    "webforge/config":"1.0.*@stable"
+  "require": {
+    "webforge/webforge": "1.7.*@dev",
+    "webforge/doctrine": "1.2.*@dev",
+    "webforge/view": "1.0.*@dev",
+    "webforge/config": "1.0.*@stable",
+
+    "symfony/framework-bundle": "2.3.*@stable",
+    "symfony/http-kernel": "2.3.*@stable",
+    "symfony/dependency-injection": "2.3.*@stable",
+    "symfony/class-loader": "2.3.*@stable"
+  },
+  "suggest": {
+    "symfony/security-bundle": "to secure your application"
   },
   "require-dev": {
-    "webforge/testplate": "1.*"
+    "webforge/testplate": "1.*",
+    "symfony/security-bundle": "2.3.*@stable"
   },
-  "extra":{
-    "branch-alias":{
-      "dev-master":"0.1.x-dev"
+  "extra": {
+    "branch-alias": {
+      "dev-master": "0.1.x-dev"
     }
   }
 }

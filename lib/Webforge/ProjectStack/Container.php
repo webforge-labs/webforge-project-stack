@@ -5,6 +5,7 @@ namespace Webforge\ProjectStack;
 use Webforge\Framework\Project;
 use Webforge\Doctrine\Container as DoctrineContainer;
 use InvalidArgumentException;
+use Webforge\ProjectStack\Symfony\Kernel;
 
 class Container {
 
@@ -17,6 +18,12 @@ class Container {
    * @var Webforge\Doctrine\Container
    */
   protected $doctrineContainer;
+
+  
+  /**
+   * @var Webforge\ProjectStack\Symfony\Kernel
+   */
+  protected $kernel;
   
   public function __construct(Project $project) {
     $this->project = $project;
@@ -58,6 +65,26 @@ class Container {
       $this->project->getConfiguration()->req('db'),
       array($this->project->dir('doctrine-entities'))
     );
+  }
+  
+  /**
+   * @return Webforge\ProjectStack\Symfony\Kernel
+   */
+  public function getKernel() {
+    if (!isset($this->kernel)) {
+      $this->kernel = new Kernel($this->project);
+      $this->kernel->loadClassCache();
+    }
+    return $this->kernel;
+  }
+  
+  /**
+   * @param Webforge\ProjectStack\Symfony\Kernel $kernel
+   * @chainable
+   */
+  public function injectKernel(Kernel $kernel) {
+    $this->kernel = $kernel;
+    return $this;
   }
   
   /**
