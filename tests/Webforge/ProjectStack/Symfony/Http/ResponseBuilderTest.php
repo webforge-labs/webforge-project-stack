@@ -21,4 +21,14 @@ class ResponseBuilderTest extends \Webforge\Code\Test\Base {
       ->code(304)
       ->format('html');
   }
+
+  public function testResponseForJSON() {
+    $response = $this->response()->code(200)->json((object) array('status'=>'ok'));
+
+    $this->assertSymfonyResponse($response)
+      ->body(json_encode((object) array('status'=>'ok')))
+      ->code(200)
+      ->format('json')
+    ;
+  }
 }
