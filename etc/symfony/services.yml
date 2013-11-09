@@ -1,0 +1,52 @@
+parameters:
+    projectstack.con: "tests"
+    projectstack.template_engine_class: Webforge\View\Mustache\Mustache
+
+services:
+    projectstack.boot_container_service:
+      class: Webforge\ProjectStack\BootContainerService
+
+    projectstack.boot_container:
+      class: Webforge\Setup\BootContainer
+      factory_service: projectstack.boot_container_service
+      factory_method: getBootContainer
+
+    projectstack.project:
+      class: Webforge\Framework\Project
+      factory_service:  projectstack.boot_container
+      factory_method:   getProject
+
+    projectstack.container:
+      class: Webforge\ProjectStack\Container
+      arguments:
+        - @projectstack.project
+
+    projectstack.directory_tpl:
+      class: Webforge\Common\System\Dir
+      factory_service: projectstack.project
+      factory_method: dir
+      arguments: ["tpl"]
+
+    projectstack.directory_tpl_cache:
+      class: Webforge\Common\System\Dir
+      factory_service: projectstack.project
+      factory_method: dir
+      arguments: ["tpl-cache"]
+
+    projectstack.dcc:
+      class: Webforge\Doctrine\Container
+      factory_service: projectstack.container
+      factory_method:  getDoctrineContainer
+
+    projectstack.entity_manager:
+      class: Doctrine\ORM\EntityManager
+      factory_service:  projectstack.dcc
+      factory_method:  getEntityManager
+      arguments:
+        - "%projectstack.con%"
+
+    projectstack.template_engine:
+      class: %projectstack.template_engine_class%
+      arguments:
+        - @projectstack.directory_tpl
+        - @projectstack.directory_tpl_cache
