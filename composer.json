@@ -14,7 +14,7 @@
     }
   },
   "require": {
-    "webforge/webforge": "1.7.*@dev",
+    "webforge/webforge": "1.8.*@dev",
     "webforge/doctrine": "1.2.*@dev",
     "webforge/view": "1.0.*@dev",
     "webforge/config": "1.0.*@stable",

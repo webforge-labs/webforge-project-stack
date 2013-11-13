@@ -11,6 +11,11 @@ services:
       factory_service: projectstack.boot_container_service
       factory_method: getBootContainer
 
+    projectstack.webforge:
+      class: Webforge\Framework\Container
+      factory_service: projectstack.boot_container
+      factory_method: getWebforge
+
     projectstack.project:
       class: Webforge\Framework\Project
       factory_service:  projectstack.boot_container
@@ -50,3 +55,19 @@ services:
       arguments:
         - @projectstack.directory_tpl
         - @projectstack.directory_tpl_cache
+
+    projectstack.systemcontainer:
+      class: Webforge\Common\System\System
+      factory_service:  projectstack.webforge
+      factory_method:  getSystemContainer
+
+    projectstack.system:
+      class: Webforge\Common\System\System
+      factory_service:  projectstack.systemcontainer
+      factory_method:  getSystem
+
+    projectstack.doctrine.compile_command:
+      class: Webforge\Doctrine\Compiler\Console\CompileCommand
+      arguments:
+        - @projectstack.dcc
+        - @projectstack.system
