@@ -26,6 +26,9 @@ class Kernel extends SymfonyKernel {
       $bundles[] = new \Symfony\Bundle\SecurityBundle\SecurityBundle();
     }
 
+
+
+
     /*
       new Symfony\Bundle\TwigBundle\TwigBundle(),
       new Symfony\Bundle\MonologBundle\MonologBundle(),
@@ -35,13 +38,12 @@ class Kernel extends SymfonyKernel {
       new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
     );
 
-    if (in_array($this->getEnvironment(), array('dev', 'test'))) {
-      $bundles[] = new Acme\DemoBundle\AcmeDemoBundle();
-      $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
-      $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
-      $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
-    }
     */
+    if (in_array($this->getEnvironment(), array('development', 'test'))) {
+      //$bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
+      //$bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
+      $bundles[] = new \Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
+    }
 
     return $bundles;
   }

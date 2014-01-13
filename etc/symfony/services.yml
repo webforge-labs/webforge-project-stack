@@ -38,6 +38,21 @@ services:
       factory_method: dir
       arguments: ["tpl-cache"]
 
+    projectstack.template_engine:
+      class: %projectstack.template_engine_class%
+      arguments:
+        - @projectstack.directory_tpl
+        - @projectstack.directory_tpl_cache
+
+    # general definition for a symfony templating engine
+    templating.engine.mustache:
+      class: Webforge\View\SymfonyAdapter
+      arguments: 
+        - @projectstack.template_engine
+        - @templating.name_parser
+        - @templating.loader
+        - @router
+
     projectstack.dcc:
       class: Webforge\Doctrine\Container
       factory_service: projectstack.container
@@ -49,12 +64,6 @@ services:
       factory_method:  getEntityManager
       arguments:
         - "%projectstack.con%"
-
-    projectstack.template_engine:
-      class: %projectstack.template_engine_class%
-      arguments:
-        - @projectstack.directory_tpl
-        - @projectstack.directory_tpl_cache
 
     projectstack.systemcontainer:
       class: Webforge\Common\System\System
