@@ -7,9 +7,14 @@ services:
       class: Webforge\ProjectStack\BootContainerService
 
     projectstack.boot_container:
-      class: Webforge\Setup\BootContainer
+      class: Webforge\ProjectStack\BootContainer
       factory_service: projectstack.boot_container_service
       factory_method: getBootContainer
+
+    projectstack.kernel:
+      class: Webforge\ProjectStack\Symfony
+      factory_service: projectstack.boot_container
+      factory_method: getKernel
 
     projectstack.webforge:
       class: Webforge\Framework\Container
@@ -80,3 +85,7 @@ services:
       arguments:
         - @projectstack.dcc
         - @projectstack.system
+
+    projectstack.cli.application:
+      class:     Symfony\Bundle\FrameworkBundle\Console\Application
+      arguments: ['@projectstack.kernel']

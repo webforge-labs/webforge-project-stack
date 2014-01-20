@@ -26,9 +26,6 @@ class Kernel extends SymfonyKernel {
       $bundles[] = new \Symfony\Bundle\SecurityBundle\SecurityBundle();
     }
 
-
-
-
     /*
       new Symfony\Bundle\TwigBundle\TwigBundle(),
       new Symfony\Bundle\MonologBundle\MonologBundle(),
