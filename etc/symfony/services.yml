@@ -26,10 +26,6 @@ services:
       factory_service:  projectstack.boot_container
       factory_method:   getProject
 
-    projectstack.container:
-      class: Webforge\ProjectStack\Container
-      arguments:
-        - @projectstack.project
 
     projectstack.directory_tpl:
       class: Webforge\Common\System\Dir
@@ -60,7 +56,7 @@ services:
 
     projectstack.dcc:
       class: Webforge\Doctrine\Container
-      factory_service: projectstack.container
+      factory_service: projectstack.boot_container
       factory_method:  getDoctrineContainer
 
     projectstack.entity_manager:

@@ -71,7 +71,7 @@ class BootContainer extends WebforgeBootContainer {
     if (class_exists($kernelClass->getFQN())) {
       return $kernelClass;
     } else {
-      $kernelClass->setNamespace('Webforge\ProjectStack');
+      $kernelClass->setNamespace('Webforge\ProjectStack\Symfony');
       return $kernelClass;
     }
   }
