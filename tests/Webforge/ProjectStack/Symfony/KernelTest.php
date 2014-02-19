@@ -10,6 +10,8 @@ class KernelTest extends \Webforge\Code\Test\Base {
     $this->chainClass = __NAMESPACE__ . '\\Kernel';
     parent::setUp();
 
+    $this->markTestSkipped('no configuration (local) is made for testing');
+
     $this->kernel = new Kernel($this->project = $this->frameworkHelper->getProject());
   }
 

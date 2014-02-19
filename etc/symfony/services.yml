@@ -85,3 +85,11 @@ services:
     projectstack.cli.application:
       class:     Symfony\Bundle\FrameworkBundle\Console\Application
       arguments: ['@projectstack.kernel']
+
+    projectstack.serializer_builder:
+      class:     Webforge\Serializer\SerializerBuilder
+
+    projectstack.serializer:
+      class:     JMS\Serializer\Serializer
+      factory_service: projectstack.serializer_builder
+      factory_method: getSerializer

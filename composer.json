@@ -15,14 +15,17 @@
   },
   "require": {
     "webforge/webforge": "1.9.*@dev",
-    "webforge/doctrine-compiler": "1.0.*@dev",
+    "webforge/doctrine": "1.2.*@dev",
     "webforge/view": "1.0.*@dev",
     "webforge/config": "1.0.*@stable",
+    "webforge/serializer": "1.0.*@dev",
 
     "symfony/framework-bundle": "2.4.*@stable",
     "symfony/http-kernel": "2.4.*@stable",
     "symfony/dependency-injection": "2.4.*@stable",
-    "symfony/class-loader": "2.4.*@stable"
+    "symfony/class-loader": "2.4.*@stable",
+    
+    "sensio/generator-bundle": "2.3.*"
   },
   "suggest": {
     "symfony/security-bundle": "to secure your application"
