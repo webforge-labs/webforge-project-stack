@@ -36,7 +36,13 @@ class BootContainer extends WebforgeBootContainer {
    * @return object The associated service
    */
   public function get($id, $invalidBehavior = ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE) {
-    return $this->getKernel()->getContainer()->get($id, $invalidBehavior);
+    $container = $this->getKernel()->getContainer();
+
+    if (!isset($container)) {
+      throw new \Exception('Kernel is not bootet, yet');
+    }
+
+    return $container->get($id, $invalidBehavior);
   }
 
   protected function initProject(Project $project) {
