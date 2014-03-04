@@ -22,8 +22,12 @@ class Kernel extends SymfonyKernel {
 
     $bundles[] = new \Symfony\Bundle\FrameworkBundle\FrameworkBundle();
 
-    if (class_exists('\Symfony\Bundle\SecurityBundle\SecurityBundle')) {
+    if (class_exists('Symfony\Bundle\SecurityBundle\SecurityBundle')) {
       $bundles[] = new \Symfony\Bundle\SecurityBundle\SecurityBundle();
+    }
+
+    if (class_exists('Doctrine\Bundle\DoctrineBundle\DoctrineBundle')) {
+      $bundles[] = new \Doctrine\Bundle\DoctrineBundle\DoctrineBundle();
     }
 
     /*

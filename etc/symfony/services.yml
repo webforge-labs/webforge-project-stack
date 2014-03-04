@@ -93,3 +93,17 @@ services:
       class:     JMS\Serializer\Serializer
       factory_service: projectstack.serializer_builder
       factory_method: getSerializer
+
+   # cli
+    projectstack.command.rundql:
+      class:     Webforge\ProjectStack\Symfony\Console\RunDqlCommand
+      arguments: ["@doctrine.orm.entity_manager"]
+      tags:
+        -  { name: console.command }
+
+    projectstack.command.:
+      class:     Webforge\ProjectStack\Symfony\Console\CompileModelCommand
+      arguments: ["@projectstack.system"]
+      tags:
+        -  { name: console.command }
+
