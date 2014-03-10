@@ -11,10 +11,11 @@ class Kernel extends SymfonyKernel {
 
   protected $project;
 
-  public function __construct(Project $project) {
+  // with the first parameter we'll break for example insulate() in KernelTestCase from symfony
+  public function __construct(Project $project, $status = NULL) {
     $this->project = $project;
     
-    parent::__construct($this->project->getStatus(), $debug = $this->project->isDevelopment());
+    parent::__construct($status ?: $this->project->getStatus(), $debug = $this->project->isDevelopment());
   }
 
   public function registerBundles() {
