@@ -22,7 +22,7 @@ class BootContainer extends WebforgeBootContainer {
    * @var Webforge\ProjectStack\Symfony\Kernel
    */
   protected $kernel;
-  
+
   public function __construct($rootDirectory) {
     parent::__construct($rootDirectory);
     $this->initProject($this->getProject());
@@ -63,11 +63,33 @@ class BootContainer extends WebforgeBootContainer {
    */
   public function getKernel() {
     if (!isset($this->kernel)) {
-      $kernelClass = $this->getKernelClass()->getFQN();
-      $this->kernel = new $kernelClass($this->project);
-      $this->initKernel($this->kernel);
+      $this->kernel = $this->createKernel();
     }
     return $this->kernel;
+  }
+
+  /**
+   * @return Webforge\ProjectStack\Symfony\Kernel
+   */
+  public function createKernel($env = NULL) {
+    $kernelClass = $this->getKernelClass()->getFQN();
+    $kernel = new $kernelClass($this->project, $env);
+    $this->initKernel($kernel);
+
+    return $kernel;
+  }
+
+  /**
+   * Shutsdown the current Kernel if existing and resets the internal Kernel to NULL
+   * 
+   * on the next getKernel() a new Kernel will be constructed from scratch
+   */
+  public function shutdownAndResetKernel() {
+    if (isset($this->kernel)) {
+      $this->kernel->shutdown();
+    }
+
+    $this->kernel = NULL;
   }
 
   protected function getKernelClass() {
