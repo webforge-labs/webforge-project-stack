@@ -55,6 +55,7 @@ class BootContainer extends WebforgeBootContainer {
   }
 
   public function registerDoctrineAnnotations() {
+    //AnnotationRegistry::registerLoader('class_exists');
     AnnotationRegistry::registerLoader(array($this->getAutoLoader(), 'loadClass'));
   }
 
@@ -73,7 +74,7 @@ class BootContainer extends WebforgeBootContainer {
    */
   public function createKernel($env = NULL) {
     $kernelClass = $this->getKernelClass()->getFQN();
-    $kernel = new $kernelClass($this->project, $env);
+    $kernel = new $kernelClass($env ?: $this->getProject()->getStatus(), $this->getProject()->isDevelopment(), $this->project);
     $this->initKernel($kernel);
 
     return $kernel;
