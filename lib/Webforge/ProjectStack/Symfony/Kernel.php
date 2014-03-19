@@ -49,6 +49,23 @@ class Kernel extends SymfonyKernel {
     return $bundles;
   }
 
+  protected function getEnvParameters() {
+    $project = $this->project;
+
+    return array_merge(
+      parent::getEnvParameters(),
+      array(
+        'webforge.project.namespace' => $project->getNamespace(),
+        'webforge.project.name' => $project->getName(),
+        'webforge.project.lower-name' => $project->getLowerName(),
+        'webforge.host' => $project->getHost(),
+        'webforge.project.baseUrl' => (string) $project->getHostUrl(),
+        'webforge.project.cmsBaseUrl' => (string) $project->getHostUrl('cms'),
+        'webforge.project.directory-locations.doctrine-entities' => $project->dir('doctrine-entities')->wtsPath()
+      )
+    );
+  }
+
   public function getRootDir() {
     if (!isset($this->rootDir)) {
       $this->rootDir = $this->project->dir('root')->getPath(Dir::WITHOUT_TRAILINGSLASH);
@@ -67,5 +84,10 @@ class Kernel extends SymfonyKernel {
 
   public function registerContainerConfiguration(LoaderInterface $loader) {
     $loader->load((string) $this->project->dir('etc')->getFile('symfony/config_'.$this->getEnvironment().'.yml'));
+
+    $hostConfigFile = $this->project->dir('etc')->getFile('symfony/config_'.$this->project->getHost().'.yml');
+    if ($hostConfigFile->exists()) {
+      $loader->load((string) $hostConfigFile);
+    }
   }
 }
