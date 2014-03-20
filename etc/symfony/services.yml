@@ -86,15 +86,23 @@ services:
       class:     Symfony\Bundle\FrameworkBundle\Console\Application
       arguments: ['@projectstack.kernel']
 
+    # deprecated. try to use the jms serializer not this builder and the projectstack.serializer
     projectstack.serializer_builder:
       class:     Webforge\Serializer\SerializerBuilder
 
+    # deprecated. try to use the jms serializer not this builder and the projectstack.serializer
     projectstack.serializer:
       class:     JMS\Serializer\Serializer
       factory_service: projectstack.serializer_builder
       factory_method: getSerializer
 
-   # cli
+    # hook the WebforgeDateTime handler into jms serializer (NOT into our serializer build with SerializerBuilder)
+    projectstack.serializer.datetimehandler:
+      class:      Webforge\Serializer\DateTimeHandler
+      tags: 
+        - { name: jms_serializer.subscribing_handler }
+
+    # cli
     projectstack.command.rundql:
       class:     Webforge\ProjectStack\Symfony\Console\RunDqlCommand
       arguments: ["@doctrine.orm.entity_manager"]
