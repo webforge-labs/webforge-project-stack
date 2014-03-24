@@ -40,7 +40,7 @@ class Kernel extends SymfonyKernel {
     );
 
     */
-    if (in_array($this->getEnvironment(), array('development', 'test'))) {
+    if (in_array($this->getEnvironment(), array('development'))) {
       //$bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
       //$bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
       $bundles[] = new \Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
@@ -89,5 +89,13 @@ class Kernel extends SymfonyKernel {
     if ($hostConfigFile->exists()) {
       $loader->load((string) $hostConfigFile);
     }
+
+    if ($this->isInTests()) {
+      $loader->load((string) $this->project->dir('etc')->getFile('symfony/in_tests.yml'));
+    }
+  }
+
+  protected function isInTests() {
+    return defined('phpunit'); // see phpunit.xml.dist
   }
 }

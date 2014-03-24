@@ -74,10 +74,29 @@ class BootContainer extends WebforgeBootContainer {
    */
   public function createKernel($env = NULL) {
     $kernelClass = $this->getKernelClass()->getFQN();
-    $kernel = new $kernelClass($env ?: $this->getProject()->getStatus(), $this->getProject()->isDevelopment(), $this->project);
+    $kernel = new $kernelClass($env ?: $this->getEnvironment(), $this->getProject()->isDevelopment(), $this->project);
     $this->initKernel($kernel);
 
     return $kernel;
+  }
+
+  /**
+   * @return string
+   */
+  public function getEnvironment() {
+    return $this->environment ?: $this->getProject()->getStatus();
+  }
+
+  /**
+   * Sets the enviroment for the container globally
+   *
+   * if this environment is set it is used for creating the kernel
+   *
+   * notice: if the kernel is already constructed, this has no effect
+   * you have to shutdownAndResetKernel and create a new one (with getKernel)
+   */
+  public function setEnvironment($env) {
+    $this->environment = $env;
   }
 
   /**
