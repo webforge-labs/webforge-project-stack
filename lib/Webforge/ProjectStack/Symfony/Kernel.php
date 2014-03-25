@@ -30,19 +30,24 @@ class Kernel extends SymfonyKernel {
       $bundles[] = new \Doctrine\Bundle\DoctrineBundle\DoctrineBundle();
     }
 
-    /*
-      new Symfony\Bundle\TwigBundle\TwigBundle(),
-      new Symfony\Bundle\MonologBundle\MonologBundle(),
-      new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
-      new Symfony\Bundle\AsseticBundle\AsseticBundle(),
-      new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
-      new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
-    );
+    if (class_exists('Symfony\Bundle\MonologBundle\MonologBundle')) {
+      $bundles[] = new \Symfony\Bundle\MonologBundle\MonologBundle();
+    }
 
-    */
+    if (class_exists('Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle')) {
+      $bundles[] = new \Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle();
+    }
+
+    if (class_exists('Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle')) {
+      $bundles[] = new \Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle();
+    }
+
     if (in_array($this->getEnvironment(), array('development'))) {
-      //$bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
-      //$bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
+      
+      if (class_exists('Symfony\Bundle\WebProfilerBundle\WebProfilerBundle')) {
+        $bundles[] = new \Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
+      }
+
       $bundles[] = new \Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
     }
 
@@ -59,8 +64,8 @@ class Kernel extends SymfonyKernel {
         'webforge.project.name' => $project->getName(),
         'webforge.project.lower-name' => $project->getLowerName(),
         'webforge.host' => $project->getHost(),
-        'webforge.project.baseUrl' => (string) $project->getHostUrl(),
-        'webforge.project.cmsBaseUrl' => (string) $project->getHostUrl('cms'),
+        'webforge.project.base-url' => (string) $project->getHostUrl(),
+        'webforge.project.cms-base-url' => (string) $project->getHostUrl('cms'),
         'webforge.project.directory-locations.doctrine-entities' => $project->dir('doctrine-entities')->wtsPath()
       )
     );

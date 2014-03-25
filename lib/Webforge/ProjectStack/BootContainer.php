@@ -23,6 +23,13 @@ class BootContainer extends WebforgeBootContainer {
    */
   protected $kernel;
 
+  /**
+   * Used for setting the environment in the kernel
+   *
+   * @var string
+   */
+  protected $environment;
+
   public function __construct($rootDirectory) {
     parent::__construct($rootDirectory);
     $this->initProject($this->getProject());
