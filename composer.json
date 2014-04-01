@@ -28,6 +28,8 @@
     "symfony/validator": "2.4.*@stable",
     "symfony/finder": "2.4.*",
 
+    "jms/serializer-bundle": "0.13.*@stable",
+
     "sensio/generator-bundle": "2.3.*"
   },
   "suggest": {

@@ -21,6 +21,7 @@ class Kernel extends SymfonyKernel {
     $bundles = array();
 
     $bundles[] = new \Symfony\Bundle\FrameworkBundle\FrameworkBundle();
+    $bundles[] = new \JMS\SerializerBundle\JMSSerializerBundle();
 
     if (class_exists('Symfony\Bundle\SecurityBundle\SecurityBundle')) {
       $bundles[] = new \Symfony\Bundle\SecurityBundle\SecurityBundle();
