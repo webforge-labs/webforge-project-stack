@@ -115,3 +115,6 @@ services:
       tags:
         -  { name: console.command }
 
+    projectstack.views.factory:
+      class:     Webforge\ProjectStack\View\Factory
+      arguments: ["@projectstack.project", "@doctrine.orm.entity_manager", "@router", "@markdown.parser"]
