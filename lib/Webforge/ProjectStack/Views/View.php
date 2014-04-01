@@ -3,6 +3,8 @@
 namespace Webforge\ProjectStack\Views;
 
 use Webforge\View\Renderable;
+use Webforge\Common\String as S;
+use Webforge\Common\ClassUtil;
 
 abstract class View implements Renderable {
 
