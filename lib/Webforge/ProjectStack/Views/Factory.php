@@ -29,6 +29,8 @@ class Factory {
     
     $this->injectView($view);
 
+    $view->init();
+
     return $view;
   }
 
