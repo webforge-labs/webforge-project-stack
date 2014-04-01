@@ -117,4 +117,4 @@ services:
 
     projectstack.views.factory:
       class:     Webforge\ProjectStack\View\Factory
-      arguments: ["@projectstack.project", "@doctrine.orm.entity_manager", "@router", "@markdown.parser"]
+      arguments: ["@projectstack.project", "@doctrine.orm.entity_manager", "@router"]
