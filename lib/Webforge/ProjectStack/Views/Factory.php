@@ -7,6 +7,7 @@ use Doctrine\ORM\EntityManager;
 use Webforge\Common\Exception;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Webforge\Framework\Project;
+use Webforge\Common\String as S;
 
 class Factory {
 
@@ -23,7 +24,8 @@ class Factory {
   }
 
   public function getView($className, $vars = array()) {
-    $fqn = ClassUtil::expandNamespace($className, $this->project->getNamespace().'\\Views');
+    //$fqn = ClassUtil::expandNamespace($className, $this->project->getNamespace().'\\Views');
+    $fqn = S::expand($className, $this->project->getNamespace().'\\Views\\', S::START);
 
     $view = $this->createView($fqn, $vars);
     
@@ -35,13 +37,6 @@ class Factory {
   }
 
   protected function injectView(View $view) {
-    if ($view instanceof UrlGenerating) {
-      $view->setRouter($this->router);
-    }
-
-    if ($view instanceof MarkdownTransforming) {
-      $view->setMarkdownParser($this->markdownParser);
-    }
   }
 
   protected function createView($fqn, $vars = array()) {
