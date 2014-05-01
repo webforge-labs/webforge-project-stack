@@ -109,9 +109,15 @@ services:
       tags:
         -  { name: console.command }
 
-    projectstack.command.:
+    projectstack.command.compile_model:
       class:     Webforge\ProjectStack\Symfony\Console\CompileModelCommand
       arguments: ["@projectstack.system"]
+      tags:
+        -  { name: console.command }
+
+    projectstack.command.mail_spool:
+      class:     Webforge\ProjectStack\Symfony\Console\MailSpoolCommand
+      arguments: ["%kernel.root_dir%/files/mailspool"]
       tags:
         -  { name: console.command }
 
