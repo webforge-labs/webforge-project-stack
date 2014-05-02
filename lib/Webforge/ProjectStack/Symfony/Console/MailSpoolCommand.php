@@ -35,15 +35,19 @@ class MailSpoolCommand extends Command {
     ;
   }
 
+  protected function getFinder() {
+    return Finder::create()->files()->in($this->spoolPath);
+  }
+
   /**
    * {@inheritdoc}
    */
   protected function execute(InputInterface $input, OutputInterface $output) {
-    $finder = Finder::create()->files()->in($this->spoolPath);
-
     if ($input->getOption('clear')) {
-      foreach($finder as $file) {
-        unlink($file);
+      if (is_dir($this->spoolPath)) {
+        foreach($finder as $file) {
+          unlink($file);
+        }
       }
 
       return 0;
@@ -64,7 +68,7 @@ class MailSpoolCommand extends Command {
     $result = array();
     foreach ($finder as $mailFile) {
       /** @var $message \Swift_Message */
-      $message = unserialize(file_get_contents($mailFile));
+      $message = unserialize($mailFile->getContents());
 
       $export = new \stdClass;
 
