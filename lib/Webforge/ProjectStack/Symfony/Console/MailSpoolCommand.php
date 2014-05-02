@@ -45,7 +45,7 @@ class MailSpoolCommand extends Command {
   protected function execute(InputInterface $input, OutputInterface $output) {
     if ($input->getOption('clear')) {
       if (is_dir($this->spoolPath)) {
-        foreach($finder as $file) {
+        foreach($this->getFinder() as $file) {
           unlink($file);
         }
       }
@@ -66,7 +66,7 @@ class MailSpoolCommand extends Command {
     );
 
     $result = array();
-    foreach ($finder as $mailFile) {
+    foreach ($this->getFinder() as $mailFile) {
       /** @var $message \Swift_Message */
       $message = unserialize($mailFile->getContents());
 
