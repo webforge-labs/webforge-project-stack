@@ -20,14 +20,7 @@
     "webforge/config": "1.0.*@stable",
     "webforge/serializer": "1.0.*@dev",
 
-    "symfony/framework-bundle": "2.4.*@stable",
-    "symfony/http-kernel": "2.4.*@stable",
-    "symfony/dependency-injection": "2.4.*@stable",
-    "symfony/class-loader": "2.4.*@stable",
-    "symfony/security-csrf": "2.4.*@stable",
-    "symfony/validator": "2.4.*@stable",
-    "symfony/finder": "2.4.*@stable",
-    "symfony/expression-language": "2.4.*@stable",
+    "symfony/symfony": "2.5.*@beta",
 
     "jms/serializer-bundle": "0.13.*@stable",
 
