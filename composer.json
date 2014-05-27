@@ -16,11 +16,11 @@
   "require": {
     "webforge/webforge": "1.10.*@dev",
     "webforge/doctrine": "1.2.*@dev",
-    "webforge/view": "1.0.*@dev",
+    "webforge/view": "1.0.*",
     "webforge/config": "1.0.*@stable",
     "webforge/serializer": "1.0.*@dev",
 
-    "symfony/symfony": "2.5.*@beta",
+    "symfony/symfony": "2.5.*",
 
     "jms/serializer-bundle": "0.13.*@stable",
 

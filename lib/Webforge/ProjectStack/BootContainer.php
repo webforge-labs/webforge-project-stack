@@ -116,7 +116,11 @@ class BootContainer extends WebforgeBootContainer {
       $this->kernel->shutdown();
     }
 
-    $this->kernel = NULL;
+    $this->resetKernel();
+  }
+
+  public function resetKernel() {
+    unset($this->kernel);
   }
 
   protected function getKernelClass() {
@@ -172,10 +176,6 @@ class BootContainer extends WebforgeBootContainer {
    */
   public function injectKernel(Kernel $kernel) {
     $this->kernel = $kernel;
-  }
-
-  public function resetKernel() {
-    unset($this->kernel);
   }
   
   /**

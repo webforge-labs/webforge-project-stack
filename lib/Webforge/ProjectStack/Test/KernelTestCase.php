@@ -33,6 +33,7 @@ class KernelTestCase extends Base implements HTMLTesting {
       'PHP_AUTH_PW'   => $password,
     )));
 
+
     $client->followRedirects(); // follow the login redirect
 
     return $client;
