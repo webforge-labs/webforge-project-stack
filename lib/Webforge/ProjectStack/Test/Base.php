@@ -30,7 +30,7 @@ class Base extends \Webforge\Code\Test\Base {
 
     if (empty($content)) return NULL;
 
-    return $this->assertThatObject($object = json_decode($content));
+    return $this->assertThatObject($this->parseJSON($content));
   }
 
   protected function jsonRequest($method, $url, $data = array()) {
