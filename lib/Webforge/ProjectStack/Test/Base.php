@@ -9,6 +9,10 @@ class Base extends \Webforge\Code\Test\Base {
 
   protected static $fixturesExecuted = FALSE;
 
+  public static function setUpBeforeClass() {
+    self::$fixturesExecuted = FALSE;
+  }
+
   protected function initHelper() {
     $this->helper = new Helper($this->getContainer());
     $this->helper->onTestSetup();
