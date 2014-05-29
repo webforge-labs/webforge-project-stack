@@ -6,6 +6,23 @@ use Webforge\Code\Test\HTMLTesting;
 
 class KernelTestCase extends Base implements HTMLTesting {
   
+  protected $client;
+
+  protected function setUpAuthClient($user, $password) {
+    $this->client = array($user, $password);
+  }
+
+  public function setUp() {
+    parent::setUp();
+
+    if (is_array($this->client)) {
+      // THIS RESETS THE CONTAINER and KERNEL
+      $this->client = $this->createAuthClient($this->client[0], $this->client[1]);
+    }
+
+    $this->initHelper();
+  }
+
  /**
    * Creates a Client.
    *

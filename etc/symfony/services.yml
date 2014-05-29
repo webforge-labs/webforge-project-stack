@@ -122,5 +122,14 @@ services:
         -  { name: console.command }
 
     projectstack.views.factory:
-      class:     Webforge\ProjectStack\View\Factory
+      class:     Webforge\ProjectStack\Views\Factory
       arguments: ["@projectstack.project", "@doctrine.orm.entity_manager", "@router"]
+
+   # tests and fixtures
+    projectstack.fixtures_manager:
+      class:     Webforge\Doctrine\Fixtures\FixturesManager
+      arguments: ["@doctrine.orm.entity_manager"]
+
+    projectstack.fixtures.default_parts:
+      class:     Webforge\ProjectStack\Test\DefaultPartsFixture
+      arguments: ["@service_container"]

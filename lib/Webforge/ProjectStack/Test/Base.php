@@ -4,6 +4,17 @@ namespace Webforge\ProjectStack\Test;
 
 class Base extends \Webforge\Code\Test\Base {
 
+  protected $em;
+  protected $helper;
+
+  protected static $fixturesExecuted = FALSE;
+
+  protected function initHelper() {
+    $this->helper = new Helper($this->getContainer());
+    $this->helper->onTestSetup();
+    $this->em = $this->helper->em;
+  }
+
   protected function resetAndBootKernel(Array $options = array()) {
     $container = $this->frameworkHelper->getBootContainer();
 
@@ -46,6 +57,19 @@ class Base extends \Webforge\Code\Test\Base {
       // make sure that no invalid json can be passed
       is_string($data) ? json_encode($this->parseJSON($data)) : json_encode($data)
     );
+  }
+
+  protected function executeFixtures(Array $fixtures, array $options = array()) {
+    $once = isset($options['once']) ? (bool) $options['once'] : FALSE;
+
+    if (!$once || ($once && !self::$fixturesExecuted)) {
+      $this->helper->executeFixtures($fixtures);
+      self::$fixturesExecuted = TRUE;
+    }
+  }
+
+  protected function executeFixturesAgain() {
+    self::$fixturesExecuted = FALSE;
   }
 
   protected function getKernel() {
