@@ -29,8 +29,8 @@ class Helper {
     $this->project = $container->get('projectstack.project');
     $this->entitiesNS = $this->project->getNamespace().'\\Entities';
     $this->fixtureParts = $container->get('projectstack.fixtures.parts_manager');
-    $this->em = $container->get('doctrine.orm.entity_manager');
     $this->dc = $container->get('doctrine');
+    $this->em = $this->dc->getManager();
     $this->url = $container->getParameter('webforge.project.base-url');
     $this->stagingToken = $container->getParameter('staging_access_token');
   }
@@ -73,6 +73,8 @@ class Helper {
 
   public function resetEntityManager() {
     if (!$this->em->isOpen()) {
+      echo "resetting entity manager\n";
+      //$this->em->getConnection();
       $this->dc->resetManager($this->emName);
       $this->em = $this->dc->getManager($this->emName);
     }

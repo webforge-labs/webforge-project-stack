@@ -69,7 +69,8 @@ class Kernel extends SymfonyKernel {
         'webforge.host' => $project->getHost(),
         'webforge.project.base-url' => (string) $project->getHostUrl(),
         'webforge.project.cms-base-url' => (string) $project->getHostUrl('cms'),
-        'webforge.project.directory-locations.doctrine-entities' => $project->dir('doctrine-entities')->wtsPath()
+        'webforge.project.directory-locations.doctrine-entities' => $project->dir('doctrine-entities')->wtsPath(),
+        'router.request_context.host'=>$project->getHostUrl()->getHost()
       )
     );
   }
