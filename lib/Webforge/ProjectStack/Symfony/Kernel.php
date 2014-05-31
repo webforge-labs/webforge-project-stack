@@ -4,8 +4,10 @@ namespace Webforge\ProjectStack\Symfony;
 
 use Symfony\Component\HttpKernel\Kernel as SymfonyKernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Webforge\Framework\Project;
 use Webforge\Common\System\Dir;
+use Webforge\ProjectStack\Symfony\DependencyInjection\FixturesCompilerPass;
 
 class Kernel extends SymfonyKernel {
 
@@ -70,6 +72,14 @@ class Kernel extends SymfonyKernel {
         'webforge.project.directory-locations.doctrine-entities' => $project->dir('doctrine-entities')->wtsPath()
       )
     );
+  }
+
+  protected function prepareContainer(ContainerBuilder $container) {
+    $r = parent::prepareContainer($container);
+
+    $container->addCompilerPass(new FixturesCompilerPass());
+
+    return $r;
   }
 
   public function getRootDir() {

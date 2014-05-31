@@ -130,6 +130,12 @@ services:
       class:     Webforge\Doctrine\Fixtures\FixturesManager
       arguments: ["@doctrine.orm.entity_manager"]
 
-    projectstack.fixtures.default_parts:
-      class:     Webforge\ProjectStack\Test\DefaultPartsFixture
-      arguments: ["@service_container"]
+    projectstack.fixtures.alice_parts:
+      class:     Webforge\ProjectStack\Test\AlicePartsFixture
+      arguments: ["@projectstack.project"]
+      tags:
+        -  {  name: projectstack.partsfixture, fixtureName: alice }
+
+    projectstack.fixtures.parts_manager:
+     class:      Webforge\ProjectStack\Test\FixturePartsManager
+     arguments:  ["@projectstack.fixtures_manager"]
