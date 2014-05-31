@@ -72,6 +72,17 @@ class Base extends \Webforge\Code\Test\Base {
     }
   }
 
+  public function executeOnce(FixturePartsManager $fixturesPartsManager) {
+    if (!self::$fixturesExecuted) {
+      $ret = $fixturesPartsManager->execute();
+
+      self::$fixturesExecuted = TRUE;
+
+      return $ret;
+    }
+  }
+
+
   protected function executeFixturesAgain() {
     self::$fixturesExecuted = FALSE;
   }

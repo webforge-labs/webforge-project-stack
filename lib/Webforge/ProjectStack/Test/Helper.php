@@ -28,6 +28,7 @@ class Helper {
     $this->container = $container;
     $this->project = $container->get('projectstack.project');
     $this->entitiesNS = $this->project->getNamespace().'\\Entities';
+    $this->fixtureParts = $container->get('projectstack.fixtures.parts_manager');
     $this->em = $container->get('doctrine.orm.entity_manager');
     $this->dc = $container->get('doctrine');
     $this->url = $container->getParameter('webforge.project.base-url');
@@ -98,10 +99,7 @@ class Helper {
   }
 
   public function fixtureParts() {
-    if (!isset($this->fixtureParts)) {
-      $fixturePartsMatcher = new FixturePartsMatcher(array('default'=>$this->container->get('projectstack.fixtures.default_parts')));
-      $this->fixtureParts = new FixturePartsManager($fixturePartsMatcher, $this->container->get('projectstack.fixtures_manager'));
-    }
+    $this->fixtureParts->reset();
 
     return $this->fixtureParts;
   }
