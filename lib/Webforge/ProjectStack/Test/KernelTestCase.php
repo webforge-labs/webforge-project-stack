@@ -37,7 +37,7 @@ class KernelTestCase extends Base implements HTMLTesting {
    *
    * @return Client A Client instance
    */
-  protected function createClient(array $options = array(), array $server = array()) {
+  protected function createClient(array $options = array(), array $server = array()) {    
     $this->resetAndBootKernel($options);
 
     if (!class_exists('Symfony\Component\BrowserKit\Client')) {

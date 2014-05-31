@@ -7,6 +7,8 @@ class Base extends \Webforge\Code\Test\Base {
   protected $em;
   protected $helper;
 
+  protected static $conn;
+
   protected static $fixturesExecuted = FALSE;
 
   public static function setUpBeforeClass() {
@@ -22,13 +24,20 @@ class Base extends \Webforge\Code\Test\Base {
   protected function resetAndBootKernel(Array $options = array()) {
     $container = $this->frameworkHelper->getBootContainer();
 
+    self::$conn = $container->getKernel()->getContainer()->get('doctrine.dbal.default_connection');
+
     $container->shutdownAndResetKernel();
 
     $container->injectKernel(
       $container->createKernel(isset($options['environment']) ? $options['environment'] : NULL)
     );
 
-    return $container->getKernel(); 
+    $kernel = $container->getKernel();
+
+    // reuse dbal connection
+    $kernel->getContainer()->set('doctrine.dbal.default_connection', self::$conn);
+
+    return $kernel;
   }
 
   protected function assertJsonResponse($response, $code = 200) {
