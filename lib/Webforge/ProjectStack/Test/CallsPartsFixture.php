@@ -24,6 +24,10 @@ class CallsPartsFixture extends \Doctrine\Common\DataFixtures\AbstractFixture {
         $fixture->setObjectManager($om);
       }
 
+      if ($fixture instanceof \Doctrine\Common\DataFixtures\SHaredFixtureInterface) {
+        $fixture->setReferenceRepository($this->referenceRepository);
+      }
+
       $this->executeCall($fixture, $method, $params);
     }
 
