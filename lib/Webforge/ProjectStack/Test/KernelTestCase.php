@@ -6,7 +6,7 @@ use Webforge\Code\Test\HTMLTesting;
 
 class KernelTestCase extends Base implements HTMLTesting {
   
-  private $client, $authClient;
+  protected $client, $authClient;
 
   protected function setUpAuthClient($user, $password, array $options = array(), array $server = array()) {
     $this->authClient = array($user, $password, $options, $server);
@@ -73,7 +73,6 @@ class KernelTestCase extends Base implements HTMLTesting {
     ));
 
     $client = $this->createClient($options, $server);
-
 
     $client->followRedirects(); // follow the login redirect
 
