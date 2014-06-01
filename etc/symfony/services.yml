@@ -26,7 +26,6 @@ services:
       factory_service:  projectstack.boot_container
       factory_method:   getProject
 
-
     projectstack.directory_tpl:
       class: Webforge\Common\System\Dir
       factory_service: projectstack.project
@@ -76,16 +75,6 @@ services:
       factory_service:  projectstack.systemcontainer
       factory_method:  getSystem
 
-    projectstack.doctrine.compile_command:
-      class: Webforge\Doctrine\Compiler\Console\CompileCommand
-      arguments:
-        - @projectstack.dcc
-        - @projectstack.system
-
-    projectstack.cli.application:
-      class:     Symfony\Bundle\FrameworkBundle\Console\Application
-      arguments: ['@projectstack.kernel']
-
     # deprecated. try to use the jms serializer not this builder and the projectstack.serializer
     projectstack.serializer_builder:
       class:     Webforge\Serializer\SerializerBuilder
@@ -105,7 +94,22 @@ services:
     projectstack.uploader.original_safe_name:
      class:      Webforge\ProjectStack\Symfony\Uploader\OriginalSafeNamer
 
+    # Controllers
+    projectstack.rest.utils.factory:
+      class:    Webforge\ProjectStack\Symfony\RestUtilsFactory
+      arguments: ["@doctrine.orm.entity_manager"]
+
     # cli
+    projectstack.cli.application:
+      class:     Symfony\Bundle\FrameworkBundle\Console\Application
+      arguments: ['@projectstack.kernel']
+
+    projectstack.doctrine.compile_command:
+      class: Webforge\Doctrine\Compiler\Console\CompileCommand
+      arguments:
+        - @projectstack.dcc
+        - @projectstack.system
+
     projectstack.command.rundql:
       class:     Webforge\ProjectStack\Symfony\Console\RunDqlCommand
       arguments: ["@doctrine.orm.entity_manager"]
