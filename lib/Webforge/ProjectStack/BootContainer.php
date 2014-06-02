@@ -10,6 +10,7 @@ use Webforge\Setup\BootContainer as WebforgeBootContainer;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Webforge\Common\PHPClass;
 use Doctrine\Common\Annotations\AnnotationRegistry;
+use Doctrine\DBAL\Types\Type as DBALType;
 
 class BootContainer extends WebforgeBootContainer {
 
@@ -31,8 +32,7 @@ class BootContainer extends WebforgeBootContainer {
   protected $environment;
 
   public function __construct($rootDirectory) {
-    parent::__construct($rootDirectory);
-    $this->initProject($this->getProject());
+    parent::__construct($rootDirectory);    
   }
 
   /**
@@ -52,6 +52,11 @@ class BootContainer extends WebforgeBootContainer {
     return $container->get($id, $invalidBehavior);
   }
 
+  public function init() {
+    $this->initProject($this->getProject());
+    $this->initDoctrine();
+  }
+
   protected function initProject(Project $project) {
     
   }
@@ -59,6 +64,21 @@ class BootContainer extends WebforgeBootContainer {
   protected function initKernel(Kernel $kernel) {
     $kernel->loadClassCache();
     $kernel->boot();
+  }
+
+  public function initDoctrine() {
+    $this->registerDoctrineAnnotations();
+
+    $types = array(
+     'WebforgeDateTime'=>'Webforge\Doctrine\Types\DateTimeType',
+     'WebforgeDate'=>'Webforge\Doctrine\Types\DateType'
+    );
+
+    foreach ($types as $name => $class) {
+      if (!DBALType::hasType($name)) {
+        DBALType::addType($name, $class);
+      }
+    }
   }
 
   public function registerDoctrineAnnotations() {
