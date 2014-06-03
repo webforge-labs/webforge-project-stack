@@ -23,6 +23,7 @@
     "symfony/symfony": "2.5.*",
 
     "jms/serializer-bundle": "0.13.*@stable",
+    "jbroadway/urlify": "1.0.*",
 
     "sensio/generator-bundle": "2.3.*"
   },

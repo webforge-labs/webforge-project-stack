@@ -102,6 +102,9 @@ services:
       tags: 
         - { name: jms_serializer.subscribing_handler }
 
+    projectstack.uploader.original_safe_name:
+     class:      Webforge\ProjectStack\Symfony\Uploader\OriginalSafeNamer
+
     # cli
     projectstack.command.rundql:
       class:     Webforge\ProjectStack\Symfony\Console\RunDqlCommand

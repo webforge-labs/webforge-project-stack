@@ -72,6 +72,20 @@ class Base extends \Webforge\Code\Test\Base {
     );
   }
 
+  protected function htmlRequest($method, $url, $data = array()) {
+    return $this->client->request(
+      $method, 
+      $url,
+      array(),
+      array(),
+      array(
+        'HTTP_ACCEPT'  => 'text/html'
+        // let symfony set content type?
+      ),
+      $data // dont know the format, yet
+    );
+  }
+
   protected function executeFixtures(Array $fixtures, array $options = array()) {
     $once = isset($options['once']) ? (bool) $options['once'] : FALSE;
 
