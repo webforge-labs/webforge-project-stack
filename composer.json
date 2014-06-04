@@ -28,11 +28,9 @@
     "sensio/generator-bundle": "2.3.*"
   },
   "suggest": {
-    "symfony/security-bundle": "to secure your application"
   },
   "require-dev": {
-    "webforge/testplate": "1.*",
-    "symfony/security-bundle": "2.4.*@stable"
+    "webforge/testplate": "1.*"
   },
   "extra": {
     "branch-alias": {

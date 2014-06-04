@@ -60,8 +60,12 @@ class Kernel extends SymfonyKernel {
   protected function getEnvParameters() {
     $project = $this->project;
 
+    $env = parent::getEnvParameters();
+
+    // please note: this is executed BEFORE the config is loaded, so these parameters are just a default
+    // => everything is overwritable by the config.yml
     return array_merge(
-      parent::getEnvParameters(),
+      $env,
       array(
         'webforge.project.namespace' => $project->getNamespace(),
         'webforge.project.name' => $project->getName(),
