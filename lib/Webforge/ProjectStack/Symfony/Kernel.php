@@ -45,6 +45,10 @@ class Kernel extends SymfonyKernel {
       $bundles[] = new \Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle();
     }
 
+    if (class_exists('Symfony\Bundle\TwigBundle\TwigBundle')) {
+      $bundles[] = new \Symfony\Bundle\TwigBundle\TwigBundle();
+    }
+    
     if (mb_strpos($this->getEnvironment(), 'development') !== FALSE) {
       
       if (class_exists('Symfony\Bundle\WebProfilerBundle\WebProfilerBundle')) {
