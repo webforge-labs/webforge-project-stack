@@ -76,6 +76,9 @@ class MailSpoolCommand extends Command {
         $export->$var = $message->$getter();
       }
 
+      $export->fullFrom = $export->from;
+      $export->from = current(array_keys($export->fullFrom));
+
       $export->headers = array();
       foreach ($message->getHeaders()->getAll() as $header) {
         $export->headers[$header->getFieldName()] = $header->getFieldBody();
