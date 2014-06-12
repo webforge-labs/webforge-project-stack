@@ -3,7 +3,6 @@
 namespace Webforge\ProjectStack;
 
 use Webforge\Framework\Project;
-use Webforge\Doctrine\Container as DoctrineContainer;
 use InvalidArgumentException;
 use Webforge\ProjectStack\Symfony\Kernel;
 use Webforge\Setup\BootContainer as WebforgeBootContainer;
@@ -35,26 +34,28 @@ class BootContainer extends WebforgeBootContainer {
     parent::__construct($rootDirectory);    
   }
 
-  /**
-   * Gets a service from the dependency injection
-   * 
-   * @param string $id              The service identifier
-   * @param int    $invalidBehavior The behavior when the service does not exist
-   * @return object The associated service
-   */
-  public function get($id, $invalidBehavior = ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE) {
-    $container = $this->getKernel()->getContainer();
-
-    if (!isset($container)) {
-      throw new \Exception('Kernel is not bootet, yet');
-    }
-
-    return $container->get($id, $invalidBehavior);
+  public function registerGlobal() {
+    $GLOBALS['env']['container'] = $this;
+    $GLOBALS['env']['root'] = $this->rootDirectory;
   }
 
   public function init() {
     $this->initProject($this->getProject());
     $this->initDoctrine();
+    $this->initEnvironment();
+  }
+
+  protected function initEnvironment() {
+    /* set the environment from deploy-info.json (if this exists) */
+    $deployInfo = $this->getWebforge()->getDeployInfo($this->getProject());
+
+    if (isset($deployInfo->environment)) {
+      $this->setEnvironment($deployInfo->environment);
+    }
+
+    if (defined('phpunit')) { // see phpunit.xml.dist
+      $this->setEnvironment($this->getEnvironment().'_in_tests'); // see index.php for setting in tests per header
+    }
   }
 
   protected function initProject(Project $project) {
@@ -84,6 +85,24 @@ class BootContainer extends WebforgeBootContainer {
   public function registerDoctrineAnnotations() {
     //AnnotationRegistry::registerLoader('class_exists');
     AnnotationRegistry::registerLoader(array($this->getAutoLoader(), 'loadClass'));
+  }
+
+
+  /**
+   * Gets a service from the dependency injection
+   * 
+   * @param string $id              The service identifier
+   * @param int    $invalidBehavior The behavior when the service does not exist
+   * @return object The associated service
+   */
+  public function get($id, $invalidBehavior = ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE) {
+    $container = $this->getKernel()->getContainer();
+
+    if (!isset($container)) {
+      throw new \Exception('Kernel is not bootet, yet');
+    }
+
+    return $container->get($id, $invalidBehavior);
   }
 
   /**
@@ -156,41 +175,6 @@ class BootContainer extends WebforgeBootContainer {
   }
   
   /**
-   * 
-   * @deprecated use doctrine bundle to manage doctrine
-   * @return Webforge\Doctrine\Container
-   */
-  public function getDoctrineContainer() {
-    if (!isset($this->doctrineContainer)) {
-      $this->doctrineContainer = new DoctrineContainer();
-      $this->initDoctrineContainer($this->doctrineContainer);
-    }
-
-    return $this->doctrineContainer;
-  }
-
-  protected function initDoctrineContainer(DoctrineContainer $dcc) {
-    try {
-      $this->project->dir('doctrine-entities');
-    } catch (InvalidArgumentException $e) {
-      $this->project->defineDirectory(
-        'doctrine-entities', 
-        $this->project->getNamespaceDirectory()
-          ->sub('Entities')
-          ->makeRelativeTo($this->project->getRootDirectory())
-      ); 
-    }
-
-    // proxies should be defined anyway (as default)
-    $dcc->setProxyDirectory($this->project->dir('doctrine-proxies'));
-
-    $dcc->initDoctrine(
-      $this->project->getConfiguration()->req('db'),
-      array($this->project->dir('doctrine-entities'))
-    );
-  }
-  
-  /**
    * @param Webforge\ProjectStack\Symfony\Kernel $kernel
    * @chainable
    */
@@ -198,11 +182,4 @@ class BootContainer extends WebforgeBootContainer {
     $this->kernel = $kernel;
   }
   
-  /**
-   * @param Webforge\Doctrine\Container $doctrineContainer
-   * @chainable
-   */
-  public function injectDoctrineContainer(DoctrineContainer $doctrineContainer) {
-    $this->doctrineContainer = $doctrineContainer;
-  }
 }
