@@ -12,6 +12,8 @@ class FixturePartsManager {
 
   protected $fixtures = array();
 
+  protected $log;
+
   public function __construct(FixturesManager $manager) {
     $this->manager = $manager;
   }
