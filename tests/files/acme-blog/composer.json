@@ -1,0 +1,40 @@
+{
+  "name":"acme\/blog",
+  "description":"A blog for the company ACME",
+  "require":{
+    "webforge\/project-stack":"1.0.*"
+  },
+  "require-dev":{
+    "webforge\/testplate":">=1.5"
+  },
+  "license":"MIT",
+  "authors":[
+    {
+      "name":"Bugs Bunny",
+      "email":"b.bunny@acme.com"
+    }
+  ],
+  "minimum-stability":"dev",
+  "autoload":{
+    "psr-0":{
+      "ACME\\Blog":[
+        "src\/php\/",
+        "tests\/php\/"
+      ]
+    }
+  },
+  "extra":{
+    "branch-alias":{
+      "dev-master":"1.0.x-dev"
+    },
+
+    "directory-locations": {
+      "lib": "src/php/",
+      "tests": "tests/php/",
+      "test-files": "tests/files/",
+      "tpl": "Resources/tpl/",
+      "tpl-cache": "files/cache/tpl/",
+      "resources": "Resources/"
+    }
+  }
+}
