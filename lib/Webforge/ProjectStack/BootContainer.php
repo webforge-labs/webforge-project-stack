@@ -10,6 +10,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Webforge\Common\PHPClass;
 use Doctrine\Common\Annotations\AnnotationRegistry;
 use Doctrine\DBAL\Types\Type as DBALType;
+use Webforge\Common\String as S;
 
 class BootContainer extends WebforgeBootContainer {
 
@@ -54,12 +55,18 @@ class BootContainer extends WebforgeBootContainer {
     }
 
     if (defined('phpunit')) { // see phpunit.xml.dist
-      $this->setEnvironment($this->getEnvironment().'_in_tests'); // see index.php for setting in tests per header
+      $this->enableTestEnvironment();
     }
   }
 
   protected function initProject(Project $project) {
     
+  }
+
+  public function enableTestEnvironment() {
+     if (!S::endsWith($this->getEnvironment(), 'in_tests')) {
+       $this->setEnvironment($this->getEnvironment().'_in_tests');
+     }
   }
 
   protected function initKernel(Kernel $kernel) {
