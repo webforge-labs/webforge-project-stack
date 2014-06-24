@@ -1,16 +1,15 @@
 <?php
 
-use Psc\Boot\BootLoader;
-
 /**
  * Bootstrap and Autoload whole application
  *
  * you can use this file to bootstrap for tests or bootstrap for scripts / others
  */
-$ds = DIRECTORY_SEPARATOR;
+$autoLoader = require 'vendor/autoload.php';
 
-require_once __DIR__.$ds.'lib'.$ds.'package.boot.php';
-$bootLoader = new BootLoader(__DIR__, 'Webforge\ProjectStack\BootContainer');
-$bootLoader->loadComposer();
+$container = new \Webforge\ProjectStack\BootContainer(__DIR__);
+$container->registerGlobal();
+$container->setAutoLoader($autoLoader);
+$container->init();
 
-return $bootLoader->registerContainer();
+return $container;
