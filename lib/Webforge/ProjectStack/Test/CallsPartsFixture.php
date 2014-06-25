@@ -17,6 +17,8 @@ class CallsPartsFixture extends \Doctrine\Common\DataFixtures\AbstractFixture {
 
   public function load(ObjectManager $om) {
     $this->log = '';
+    $fixtureHelper = new FixtureHelper($this->referenceRepository);
+
     foreach ($this->calls as $call) {
       list($fixture, $method, $params) = $call;
 
@@ -26,6 +28,10 @@ class CallsPartsFixture extends \Doctrine\Common\DataFixtures\AbstractFixture {
 
       if ($fixture instanceof \Doctrine\Common\DataFixtures\SharedFixtureInterface) {
         $fixture->setReferenceRepository($this->referenceRepository);
+      }
+
+      if ($fixture instanceof PartsFixture) {
+        $fixture->setFixtureHelper($fixtureHelper);
       }
 
       $this->executeCall($fixture, $method, $params);

@@ -2,13 +2,9 @@
 
 namespace Webforge\ProjectStack\Test;
 
-use Doctrine\Common\Persistence\ObjectManager;
-use Webforge\ProjectStack\ObjectManagerAware;
 use stdClass;
 
-class AlicePartsFixture implements ObjectManagerAware {
-
-  protected $om;
+class AlicePartsFixture extends AbstractPartsFixture {
 
   public function __construct($project) {
     $this->project = $project;
@@ -22,17 +18,13 @@ class AlicePartsFixture implements ObjectManagerAware {
 
     $log = 'load alice file: '.(string) $file."\n";
     $log .= "  objects:\n";
-    foreach($objects as $key=>$object) {
+    foreach($objects as $key => $object) {
       $log .= "    $key\n";
-      $this->om->persist($object);
+      $this->persist($object);
+      $this->helper->addPartsReference('alice', $key, $object);
     }
     $log .= "\n";
 
     return $log;
-  }
-
-
-  public function setObjectManager(ObjectManager $om) {
-    $this->om = $om;
   }
 }
