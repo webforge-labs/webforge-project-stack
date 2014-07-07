@@ -122,6 +122,12 @@ services:
       tags:
         -  { name: console.command }
 
+    projectstack.command.fixture_parts_command:
+      class:     Webforge\ProjectStack\Symfony\Console\FixturePartsCommand
+      arguments: ["@projectstack.fixtures.parts_manager"]
+      tags:
+        -  { name: console.command }
+
     projectstack.command.mail_spool:
       class:     Webforge\ProjectStack\Symfony\Console\MailSpoolCommand
       arguments: ["%kernel.root_dir%/files/mailspool"]
