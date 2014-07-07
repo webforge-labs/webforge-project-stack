@@ -18,8 +18,9 @@ class AbstractPartsFixture implements PartsFixture, ObjectManagerAware {
     $this->em = $om;
   }
 
-  protected function persist($object) {
+  protected function persist($object, $reference = NULL) {
     $this->em->persist($object);
+    $this->helper->addReference($reference);
     return $object;
   }
 }
