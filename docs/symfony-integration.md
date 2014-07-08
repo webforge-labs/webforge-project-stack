@@ -5,19 +5,17 @@
 You can use the bootloader to load the `Webforge\ProjectStack\BootContainer`. 
 
 ```php
-use Psc\Boot\BootLoader;
+$autoLoader = require 'vendor/autoload.php';
 
-require_once __DIR__.DIRECTORY_SEPARATOR.'lib'.DIRECTORY_SEPARATOR.'package.boot.php';
+$container = new \Webforge\ProjectStack\BootContainer(__DIR__);
+$container->registerGlobal();
+$container->setAutoLoader($autoLoader);
+$container->init();
 
-$bootLoader = new BootLoader(__DIR__, 'Webforge\ProjectStack\BootContainer');
-$bootLoader->loadComposer();
-$bootLoader->registerPackageRoot();
-
-$container = $bootLoader->registerContainer();
-$container->registerDoctrineAnnotations();
+return $container;
 ```
 
-You can retrieve the Kernel with calling `$conatainer->getKernel()`.
+You can retrieve the Kernel with calling `$container->getKernel()`.
 
 ## services in symfony configuration
 
@@ -78,7 +76,6 @@ $response = $kernel->handle($request);
 $response->send();
 
 $kernel->terminate($request, $response);
-?>
 ```
 
 
@@ -96,17 +93,30 @@ class Kernel extends \Webforge\ProjectStack\Symfony\Kernel {
   public function registerBundles() {
     $bundles = parent::registerBundles();
 
-    $bundles[] = new \Doctrine\Bundle\DoctrineBundle\DoctrineBundle();
-    $bundles[] = new \JMS\SerializerBundle\JMSSerializerBundle();
     $bundles[] = new \FOS\UserBundle\FOSUserBundle();
-    $bundles[] = new \Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle();
-    $bundles[] = new \Symfony\Bundle\TwigBundle\TwigBundle();
+    $bundles[] = new \FOS\RestBundle\FOSRestBundle();
 
     return $bundles;
   }
 }
-?>
+
 ```
+The following bundles will be added automatically (!). Youst composer require them:
+  - Symfony SecurityBundle
+  - DoctrineBundle
+  - MonologBundle
+  - SwiftmailerBundle
+  - SensioFrameworkExtraBundle
+  - TwigBundle
+  - SensioGeneratorBundle (only enabled in dev)
+  - Symfony WebProfilerBundle (only enabled in dev)
+  
+The following bundles are pre installed
+  - Symfony FrameworkBundle
+  - JMS Serializerbundle
+
+If you try to load one of the bundles in your own Kernel you'll get a symfony exception for double defined Bundles.
+
 You can find out the right namespace with `$container->getProject()->getNamespace()`;
 
 That's it. 
