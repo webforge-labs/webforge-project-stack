@@ -16,6 +16,8 @@ use Webforge\Common\JS\JSONConverter;
 class Helper {
 
   public $em;
+
+  protected $emName = 'default';
   protected $fm;
   protected $container;
   protected $dc;
@@ -73,7 +75,6 @@ class Helper {
 
   public function resetEntityManager() {
     if (!$this->em->isOpen()) {
-      echo "resetting entity manager\n";
       //$this->em->getConnection();
       $this->dc->resetManager($this->emName);
       $this->em = $this->dc->getManager($this->emName);
