@@ -26,4 +26,8 @@ class AbstractPartsFixture implements PartsFixture, ObjectManagerAware {
 
     return $object;
   }
+
+  public function reset() {
+    
+  }
 }

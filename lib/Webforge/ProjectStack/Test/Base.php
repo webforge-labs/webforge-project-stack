@@ -106,12 +106,12 @@ class Base extends \Webforge\Code\Test\Base {
   }
 
 
-  protected function executeFixturesAgain() {
+  protected function executeFixturesAgain() {    
     self::$fixturesExecuted = FALSE;
   }
 
   protected function resetDatabaseOnNextTest() {
-    self::$fixturesExecuted = FALSE;
+    $this->executeFixturesAgain();
   }
 
   protected function getKernel() {

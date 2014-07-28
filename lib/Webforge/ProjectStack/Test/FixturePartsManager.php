@@ -42,6 +42,10 @@ class FixturePartsManager {
 
   public function reset() {
     $this->calls = array();
+
+    foreach ($this->fixtures as $fixture) {
+      $fixture->reset();
+    }
   }
 
   /**

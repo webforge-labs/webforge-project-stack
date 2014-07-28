@@ -6,9 +6,16 @@ use stdClass;
 
 class AlicePartsFixture extends AbstractPartsFixture {
 
+  protected $project;
+  protected $seed;
+
   public function __construct($project, $aliceSeed = NULL) {
     $this->project = $project;
-    $this->loader = new \Nelmio\Alice\Loader\Yaml('de', array($this), $aliceSeed);
+    $this->seed = $aliceSeed;
+    $this->loader = new \Nelmio\Alice\Loader\Yaml('de', array($this), $this->seed);
+  }
+
+  public function reset() {
   }
 
   public function loadFile($name) {
