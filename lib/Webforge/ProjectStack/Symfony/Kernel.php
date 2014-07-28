@@ -8,6 +8,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Webforge\Framework\Project;
 use Webforge\Common\System\Dir;
 use Webforge\ProjectStack\Symfony\DependencyInjection\FixturesCompilerPass;
+use Webforge\Common\String as S;
 
 class Kernel extends SymfonyKernel {
 
@@ -78,7 +79,8 @@ class Kernel extends SymfonyKernel {
         'webforge.project.base-url' => (string) $project->getHostUrl(),
         'webforge.project.cms-base-url' => (string) $project->getHostUrl('cms'),
         'webforge.project.directory-locations.doctrine-entities' => $project->dir('doctrine-entities')->wtsPath(),
-        'router.request_context.host'=>$project->getHostUrl()->getHost()
+        'router.request_context.host'=>$project->getHostUrl()->getHost(),
+        'in_tests' => S::endsWith($this->getEnvironment(), '_in_tests')
       )
     );
   }
@@ -100,7 +102,7 @@ class Kernel extends SymfonyKernel {
   }
 
   public function getCacheDir() {
-    return $this->project->dir('cache')->sub('symfony-'.$this->environment.'/')->getPath(Dir::WITHOUT_TRAILINGSLASH);
+    return $this->project->dir('cache')->sub('symfony-'.$this->getEnvironment().'/')->getPath(Dir::WITHOUT_TRAILINGSLASH);
   }
 
   public function getLogDir() {
