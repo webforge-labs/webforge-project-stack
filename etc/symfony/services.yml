@@ -1,6 +1,7 @@
 parameters:
     projectstack.con: "tests"
     projectstack.template_engine_class: Webforge\View\Mustache\Mustache
+    projectstack.alice_seed: 8
 
 services:
     projectstack.boot_container_service:
@@ -145,7 +146,7 @@ services:
 
     projectstack.fixtures.alice_parts:
       class:     Webforge\ProjectStack\Test\AlicePartsFixture
-      arguments: ["@projectstack.project"]
+      arguments: ["@projectstack.project", "%projectstack.alice_seed%"]
       tags:
         -  {  name: projectstack.partsfixture, fixtureName: alice }
 
