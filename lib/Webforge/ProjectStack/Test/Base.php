@@ -110,6 +110,10 @@ class Base extends \Webforge\Code\Test\Base {
     self::$fixturesExecuted = FALSE;
   }
 
+  protected function resetDatabaseOnNextTest() {
+    self::$fixturesExecuted = FALSE;
+  }
+
   protected function getKernel() {
     return $this->frameworkHelper->getBootContainer()->getKernel();
   }
