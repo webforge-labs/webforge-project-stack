@@ -8,7 +8,6 @@ class AlicePartsFixture extends AbstractPartsFixture {
 
   public function __construct($project, $aliceSeed = NULL) {
     $this->project = $project;
-    var_dump($aliceSeed);
     $this->loader = new \Nelmio\Alice\Loader\Yaml('de', array($this), $aliceSeed);
   }
 
