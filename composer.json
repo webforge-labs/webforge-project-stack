@@ -18,7 +18,6 @@
     "webforge/doctrine": "1.2.*@dev",
     "webforge/view": "1.0.*",
     "webforge/config": "1.0.*@stable",
-    "webforge/serializer": "1.0.*@dev",
 
     "symfony/symfony": "2.5.*",
 

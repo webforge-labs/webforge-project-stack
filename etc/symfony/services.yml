@@ -76,19 +76,9 @@ services:
       factory_service:  projectstack.systemcontainer
       factory_method:  getSystem
 
-    # deprecated. try to use the jms serializer not this builder and the projectstack.serializer
-    projectstack.serializer_builder:
-      class:     Webforge\Serializer\SerializerBuilder
-
-    # deprecated. try to use the jms serializer not this builder and the projectstack.serializer
-    projectstack.serializer:
-      class:     JMS\Serializer\Serializer
-      factory_service: projectstack.serializer_builder
-      factory_method: getSerializer
-
-    # hook the WebforgeDateTime handler into jms serializer (NOT into our serializer build with SerializerBuilder)
+    # hook the WebforgeDateTime handler into jms serializer
     projectstack.serializer.datetimehandler:
-      class:      Webforge\Serializer\DateTimeHandler
+      class:      Webforge\ProjectStack\Serializer\DateTimeHandler
       tags: 
         - { name: jms_serializer.subscribing_handler }
 
