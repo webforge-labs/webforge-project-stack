@@ -19,5 +19,15 @@ class FixturesCompilerPass implements CompilerPassInterface  {
         array($attributes[0]['fixtureName'], new Reference($id))
       );
     }
+
+    $definition = $container->getDefinition('projectstack.fixtures.alice_parts');
+    $taggedServices = $container->findTaggedServiceIds('projectstack.alice.provider');
+
+    foreach ($taggedServices as $id => $attributes) {
+      $definition->addMethodCall(
+        'addProvider',
+        array(new Reference($id))
+      );
+    }
   }
 }
