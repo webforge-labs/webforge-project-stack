@@ -57,7 +57,7 @@ class Base extends \Webforge\Code\Test\Base {
     return $this->assertThatObject($this->parseJSON($content));
   }
 
-  protected function jsonRequest($method, $url, $data = array()) {
+  protected function jsonRequest($method, $url, $data = array(), $headers = array()) {
     return $this->client->request(
       $method, 
       $url,
@@ -66,13 +66,13 @@ class Base extends \Webforge\Code\Test\Base {
       array(
         'HTTP_ACCEPT'  => 'application/json',
         'CONTENT_TYPE' => 'application/json'
-        ),
+      ) + $headers,
       // make sure that no invalid json can be passed
       is_string($data) ? json_encode($this->parseJSON($data)) : json_encode($data)
     );
   }
 
-  protected function htmlRequest($method, $url, $data = array()) {
+  protected function htmlRequest($method, $url, $data = array(), $headers = array()) {
     return $this->client->request(
       $method, 
       $url,
@@ -81,7 +81,7 @@ class Base extends \Webforge\Code\Test\Base {
       array(
         'HTTP_ACCEPT'  => 'text/html'
         // let symfony set content type?
-      ),
+      ) + $headers,
       $data // dont know the format, yet
     );
   }
