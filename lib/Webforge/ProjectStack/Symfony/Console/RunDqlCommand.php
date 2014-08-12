@@ -8,6 +8,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Doctrine\ORM\EntityManager;
+use Webforge\Common\JS\JSONConverter;
 
 class RunDqlCommand extends Command {
 
@@ -29,6 +30,10 @@ class RunDqlCommand extends Command {
         ->setDefinition(array(
             new InputArgument('dql', InputArgument::REQUIRED, 'The DQL to execute.'),
             new InputArgument('parameters', InputArgument::OPTIONAL, 'The parameters for the dql encoded as JSON.'),
+            new InputOption(
+                'base64', null, InputOption::VALUE_NONE,
+                'If set the params will be expected in base64 encoded json.'
+            ),
             new InputOption(
                 'first-result', null, InputOption::VALUE_REQUIRED,
                 'The first result in the result set.'
@@ -73,7 +78,14 @@ EOT
             $query->setMaxResults((int) $maxResult);
         }
 
-        if (($params = json_decode($input->getArgument('parameters'))) !== null) {
+        $jsonParams = $input->getArgument('parameters');
+
+        if (!empty($jsonParams)) {
+            if ($input->getOption('base64')) {
+                $jsonParams = base64_decode($jsonParams);
+            }
+
+            $params = JSONConverter::create()->parse($jsonParams);
             $query->setParameters((array) $params);
         }
 
