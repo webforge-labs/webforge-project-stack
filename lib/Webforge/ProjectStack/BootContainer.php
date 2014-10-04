@@ -46,7 +46,7 @@ class BootContainer extends WebforgeBootContainer {
     $this->initEnvironment();
   }
 
-  protected function initEnvironment() {
+  public function initEnvironment() {
     /* set the environment from deploy-info.json (if this exists) */
     $deployInfo = $this->getWebforge()->getDeployInfo($this->getProject());
 

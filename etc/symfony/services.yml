@@ -141,5 +141,10 @@ services:
         -  {  name: projectstack.partsfixture, fixtureName: alice }
 
     projectstack.fixtures.parts_manager:
-     class:      Webforge\ProjectStack\Test\FixturePartsManager
-     arguments:  ["@projectstack.fixtures_manager"]
+      class:      Webforge\ProjectStack\Test\FixturePartsManager
+      arguments:  ["@projectstack.fixtures_manager"]
+
+    projectstack.test.alice_provider:
+      class: Webforge\ProjectStack\Test\AliceProvider
+      tags:
+         -  { name: projectstack.alice.provider }
