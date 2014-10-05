@@ -12,33 +12,47 @@ use Webforge\Common\DateTime\DateTime;
 
 class DateTimeHandler implements SubscribingHandlerInterface {
 
+  protected $format;
+
   public static function getSubscribingMethods() {
     return array(
       array(
         'direction' => GraphNavigator::DIRECTION_SERIALIZATION,
         'format' => 'json',
         'type' => 'WebforgeDateTime',
-        'method' => 'serializeDateTimeToJson',
+        'method' => 'serializeDateTime',
       ),
 
       array(
         'direction' => GraphNavigator::DIRECTION_DESERIALIZATION,
         'format' => 'json',
         'type' => 'WebforgeDateTime',
-        'method' => 'deserializeDateTimeFromJson',
+        'method' => 'deserializeDateTime',
       ),
     );
   }
 
-  public function serializeDateTimeToJson(JsonSerializationVisitor $visitor, DateTime $date, array $type, Context $context) {
-    return (object) array(
-      'date'=>$date->format('Y-m-d H:i:s'),
-      'timezone'=>$date->getTimezone()->getName()
-    );
+  public function __construct($format) {
+    $this->format = $format;
   }
 
-  public function deserializeDateTimeFromJson(JsonDeserializationVisitor $visitor, $json, array $type, Context $context) {
-    $json = (object) $json;
-    return DateTime::parse('Y-m-d H:i:s', $json->date, new DateTimeZone($json->timezone));
+  public function serializeDateTime(JsonSerializationVisitor $visitor, DateTime $date, array $type, Context $context) {
+    if ($this->format === 'json') {
+      return (object) array(
+        'date'=>$date->format('Y-m-d H:i:s'),
+        'timezone'=>$date->getTimezone()->getName()
+        );
+    } else {
+      return $date->format(DateTime::ISO8601);
+    }
+  }
+
+  public function deserializeDateTime(JsonDeserializationVisitor $visitor, $json, array $type, Context $context) {
+    if ($this->format === 'json') {
+      $json = (object) $json;
+      return DateTime::parse('Y-m-d H:i:s', $json->date, new DateTimeZone($json->timezone));
+    } else {
+      return new DateTime(strtotime($json)); // php you're kidding ... 
+    }
   }
 }

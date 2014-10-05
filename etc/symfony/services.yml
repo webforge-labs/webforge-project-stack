@@ -2,6 +2,7 @@ parameters:
     projectstack.con: "tests"
     projectstack.template_engine_class: Webforge\View\Mustache\Mustache
     projectstack.alice_seed: 8
+    projectstack.datetime_format: "json"
 
 services:
     projectstack.boot_container_service:
@@ -79,6 +80,7 @@ services:
     # hook the WebforgeDateTime handler into jms serializer
     projectstack.serializer.datetimehandler:
       class:      Webforge\ProjectStack\Serializer\DateTimeHandler
+      arguments: ["%projectstack.datetime_format%"]
       tags: 
         - { name: jms_serializer.subscribing_handler }
 
