@@ -14,6 +14,8 @@ use Webforge\Common\String as S;
 
 class BootContainer extends WebforgeBootContainer {
 
+  protected $loadClassCache = TRUE; 
+
   /**
    * @var Webforge\Doctrine\Container
    */
@@ -70,7 +72,9 @@ class BootContainer extends WebforgeBootContainer {
   }
 
   protected function initKernel(Kernel $kernel) {
-    $kernel->loadClassCache();
+    if ($this->loadClassCache)
+      $kernel->loadClassCache();
+
     $kernel->boot();
   }
 
@@ -189,4 +193,7 @@ class BootContainer extends WebforgeBootContainer {
     $this->kernel = $kernel;
   }
   
+  public function dontLoadClassCache() {
+    $this->loadClassCache = FALSE;
+  }
 }
