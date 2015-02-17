@@ -21,8 +21,12 @@ class Base extends \Webforge\Code\Test\Base {
     $this->em = $this->helper->em;
   }
 
+  protected function getBootContainer() {
+    return $this->frameworkHelper->getBootContainer();
+  }
+
   protected function resetAndBootKernel(Array $options = array()) {
-    $container = $this->frameworkHelper->getBootContainer();
+    $container = $this->getBootContainer();
 
     self::$conn = $container->getKernel()->getContainer()->get('doctrine.dbal.default_connection');
 
@@ -115,7 +119,7 @@ class Base extends \Webforge\Code\Test\Base {
   }
 
   protected function getKernel() {
-    return $this->frameworkHelper->getBootContainer()->getKernel();
+    return $this->getBootContainer()->getKernel();
   }
 
   protected function getContainer() {
@@ -123,6 +127,6 @@ class Base extends \Webforge\Code\Test\Base {
   }
 
   protected function get($serviceId) {
-    return $this->frameworkHelper->getBootContainer()->get($serviceId);
+    return $this->getBootContainer()->get($serviceId);
   }
 }
